@@ -1,6 +1,6 @@
 # EdgeSafe Vision
 
-> Edge AI safety monitoring and alerting reference platform for real-world multi-camera deployment.
+> Open-source toolkit for edge AI safety monitoring, alerting, diagnostics, and real-world multi-camera deployment.
 
 EdgeSafe Vision is an open-source project maintained by **Yazhou Li**. It turns practical edge-AI delivery experience into reusable engineering assets for developers, FDEs, solution engineers and implementation teams.
 
