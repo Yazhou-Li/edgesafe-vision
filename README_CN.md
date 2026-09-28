@@ -47,15 +47,13 @@ python examples/demo.py
 edgesafe-doctor --http http://127.0.0.1:5000
 ```
 
-## 开源原则
-
-这个仓库面向真正的开源社区，不是简历展示仓库。
+## 项目原则
 
 公开内容优先满足三个标准：
 
 1. 能实际运行或复现；
 2. 对边缘 AI 开发、实施或运维有直接价值；
-3. 不泄露客户、生产环境或安全敏感信息。
+3. 示例和文档使用可公开、可复现的数据与配置。
 
 ## 安全
 
@@ -65,9 +63,7 @@ edgesafe-doctor --http http://127.0.0.1:5000
 
 ## 支持
 
-社区问题、Bug 和功能建议可以通过 GitHub 提交；仓库开启 Issues 后会统一维护。
-
-组织级私有部署、系统集成或支持需求，参见 [Enterprise Support](docs/ENTERPRISE_SUPPORT.md)。
+欢迎通过 Pull Request 参与改进。部署、系统集成和支持方式参见 [SUPPORT.md](SUPPORT.md)。
 
 ## 维护者
 
