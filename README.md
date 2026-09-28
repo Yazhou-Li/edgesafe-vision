@@ -80,9 +80,7 @@ The examples are synthetic and do not contain production credentials, customer d
 
 ## Open-source scope
 
-EdgeSafe Vision is intended to be useful as a real open-source project, not only as a showcase repository.
-
-Public development focuses on reusable engineering capabilities such as:
+EdgeSafe Vision focuses on reusable engineering capabilities such as:
 
 - rule engines
 - sanitized configuration examples
@@ -116,9 +114,7 @@ Read: [From Camera Feed to Verifiable Alarm Workflow](docs/CASE_STUDY.md).
 
 ## Support
 
-Community questions, bug reports and feature proposals are welcome through GitHub once Issues are enabled.
-
-For organizations that need private deployment, integration or support, see [Enterprise Support](docs/ENTERPRISE_SUPPORT.md).
+Contributions are welcome through pull requests. For deployment, integration or support options, see [SUPPORT.md](SUPPORT.md).
 
 ## Contributing
 
