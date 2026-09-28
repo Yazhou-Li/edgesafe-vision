@@ -1,0 +1,34 @@
+{
+  "deployment": {
+    "name": "demo-site",
+    "environment": "community-demo"
+  },
+  "services": {
+    "frigate": "http://127.0.0.1:5000",
+    "merchant": "http://127.0.0.1:8090"
+  },
+  "cameras": [
+    {
+      "id": "CAM-DEMO-01",
+      "name": "Demo Entrance",
+      "rtsp": "rtsp://demo:REDACTED@192.0.2.10:554/demo"
+    },
+    {
+      "id": "CAM-DEMO-02",
+      "name": "Demo Restricted Area",
+      "rtsp": "rtsp://demo:REDACTED@192.0.2.11:554/demo"
+    }
+  ],
+  "zones": [
+    {
+      "id": "restricted_area",
+      "camera": "CAM-DEMO-02",
+      "polygon": [
+        [0.45, 0.45],
+        [0.95, 0.45],
+        [0.95, 0.95],
+        [0.45, 0.95]
+      ]
+    }
+  ]
+}

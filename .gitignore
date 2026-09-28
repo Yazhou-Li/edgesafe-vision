@@ -1,0 +1,50 @@
+# Environment and local secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+credentials/
+
+# Runtime and generated data
+runtime/
+state/
+logs/
+log/
+backup/
+backups/
+snapshots/
+*.log
+*.dump
+*.trace
+
+# Local media
+*.mp4
+*.avi
+*.mov
+*.mkv
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+*.egg-info/
+
+# Node
+node_modules/
+dist/
+build/
+
+# IDE / OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

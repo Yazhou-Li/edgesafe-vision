@@ -1,0 +1,22 @@
+{
+  "rules": [
+    {
+      "id": "demo-overcrowd",
+      "type": "overcrowd",
+      "camera": "CAM-DEMO-01",
+      "threshold": 4,
+      "durationSeconds": 3,
+      "cooldownSeconds": 30,
+      "voiceEnabled": true
+    },
+    {
+      "id": "demo-zone-intrusion",
+      "type": "zone_intrusion",
+      "camera": "CAM-DEMO-02",
+      "zone": "restricted_area",
+      "durationSeconds": 3,
+      "cooldownSeconds": 30,
+      "voiceEnabled": true
+    }
+  ]
+}
