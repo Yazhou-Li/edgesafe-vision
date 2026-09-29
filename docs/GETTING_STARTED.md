@@ -103,7 +103,29 @@ print(engine.evaluate(rule, person_count=5, timestamp=10))
 
 The caller supplies timestamps, which makes persistence and cooldown behavior deterministic in tests.
 
-## 6. Normalize Frigate / MQTT events
+## 6. Classify camera health from existing signals
+
+The camera-health model performs no network or device I/O. It composes an
+existing freshness report with caller-supplied stream/enabled state:
+
+```python
+from edgesafe import evaluate_camera_health
+
+health = evaluate_camera_health(
+    freshness_report,
+    stream_available=True,
+    enabled=True,
+)
+print(health.state.value)
+```
+
+An intentionally disabled camera reports `disabled`; an unavailable stream
+reports `offline`; unknown stream state reports `unknown`. With an available
+stream, healthy freshness signals report `healthy`, while stale or misaligned
+signals report `degraded`. This classification is diagnostic evidence, not a
+certification that a physical camera or safety process is operational.
+
+## 7. Normalize Frigate / MQTT events
 
 Run the synthetic adapter demo:
 
@@ -138,7 +160,7 @@ remain free to use the client library or bridge that fits their environment.
 
 See [Integrations](INTEGRATIONS.md) for the supported topic contracts.
 
-## 7. Run the end-to-end synthetic pipeline
+## 8. Run the end-to-end synthetic pipeline
 
 ```bash
 python examples/end_to_end_demo.py
@@ -150,7 +172,7 @@ infrastructure.
 
 See [Reproducible Pipeline Demo](DEMO.md) to customize the JSONL scenario.
 
-## 8. Integration path
+## 9. Integration path
 
 A typical integration is:
 
@@ -175,7 +197,7 @@ See:
 - [Acceptance checklist](ACCEPTANCE_CHECKLIST.md)
 - [Sanitized field case study](CASE_STUDY.md)
 
-## 9. Before connecting real infrastructure
+## 10. Before connecting real infrastructure
 
 Do not paste production credentials or customer data into the repository, examples, Issues, or Pull Requests. Use synthetic addresses and sanitized logs.
 
