@@ -1,14 +1,32 @@
 # EdgeSafe Vision
 
+[![CI](https://github.com/Yazhou-Li/edgesafe-vision/actions/workflows/ci.yml/badge.svg)](https://github.com/Yazhou-Li/edgesafe-vision/actions/workflows/ci.yml)
+[![License](https://img.shields.io/github/license/Yazhou-Li/edgesafe-vision)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](pyproject.toml)
+
 > Open-source toolkit for edge AI safety monitoring, alerting, diagnostics, and real-world multi-camera deployment.
 
-EdgeSafe Vision is an open-source project maintained by **Yazhou Li**. It turns practical edge-AI delivery experience into reusable engineering assets for developers, FDEs, solution engineers and implementation teams.
+EdgeSafe Vision is an open-source project maintained by **Yazhou Li**. It turns practical edge-AI delivery experience into reusable engineering assets for developers, FDEs, solution engineers, integrators, and implementation teams.
 
 The project focuses on the full delivery path:
 
 **camera input → inference → events → business rules → alarms → operator feedback → acceptance**
 
 rather than on training a vision model from scratch.
+
+## Why EdgeSafe Vision exists
+
+Many computer-vision demos stop at "a person was detected." Real deployments still need to answer harder operational questions:
+
+- Is the stream actually fresh?
+- Are AI metadata and displayed video still synchronized?
+- Should a condition persist for N seconds before an alarm?
+- How does an alarm recover after the condition clears?
+- Can the system survive restart and preserve configuration?
+- Can an operator hear or see the alarm at the endpoint?
+- Can a field engineer collect evidence without changing the system?
+
+EdgeSafe Vision packages those "last-mile" engineering problems into reusable code, diagnostics, tests, and acceptance guidance.
 
 ## Highlights
 
@@ -18,10 +36,23 @@ rather than on training a vision model from scratch.
 - Restricted-zone intrusion rule design
 - Video / AI metadata freshness and temporal-skew checks
 - Explicit alarm lifecycle
+- Detector-agnostic event normalization
+- Dependency-free, read-only EdgeSafe Doctor CLI
 - Windows / Ubuntu deployment diagnostics
 - Reboot / persistence / acceptance thinking for field delivery
 - Sanitized field notes based on real delivery lessons
-- Automated tests and CI
+- Automated tests and CI across supported Python versions
+
+## Who this is for
+
+EdgeSafe Vision is useful if you are building or delivering:
+
+- edge-AI video analytics;
+- smart retail / warehouse / industrial monitoring;
+- multi-camera safety or operations workflows;
+- Frigate / MQTT / webhook based event pipelines;
+- field diagnostics for Windows or Linux edge systems;
+- acceptance tests for AI systems that must work beyond the demo.
 
 ## Current modules
 
@@ -70,13 +101,38 @@ IP Cameras / RTSP
 Requires Python 3.10+.
 
 ```bash
+git clone https://github.com/Yazhou-Li/edgesafe-vision.git
+cd edgesafe-vision
 python -m pip install -e .
 python -m unittest discover -s tests -v
 python examples/demo.py
 edgesafe-doctor --http http://127.0.0.1:5000
 ```
 
-The examples are synthetic and do not contain production credentials, customer data or private deployment material.
+For a guided walkthrough, see [Getting Started](docs/GETTING_STARTED.md).
+
+The examples are synthetic and do not contain production credentials, customer data, or private deployment material.
+
+## Minimal rule example
+
+```python
+from edgesafe.rules import OccupancyRule, OccupancyRuleEngine
+
+rule = OccupancyRule(
+    rule_id="entrance-overcrowding",
+    camera_id="cam-01",
+    threshold=4,
+    duration_seconds=10,
+    cooldown_seconds=60,
+)
+
+engine = OccupancyRuleEngine()
+
+print(engine.evaluate(rule, person_count=5, timestamp=0))
+print(engine.evaluate(rule, person_count=5, timestamp=10))
+```
+
+The caller supplies timestamps, so rule behavior stays deterministic and testable.
 
 ## Open-source scope
 
@@ -92,33 +148,44 @@ EdgeSafe Vision focuses on reusable engineering capabilities such as:
 
 See [ROADMAP.md](ROADMAP.md).
 
+## Project status
+
+EdgeSafe Vision is currently an early-stage public toolkit. The existing modules are runnable and tested, but the project is **not** presented as a certified safety product or as a drop-in production system.
+
+For production use, integrators remain responsible for site-specific validation, security, legal requirements, and any mandatory life-safety systems.
+
 ## Engineering principles
 
 **Evidence over assumptions.** A process starting successfully is not the same as an operator receiving the expected result.
 
-**Delivery over demos.** Edge AI is useful only when streams, rules, alerts, audio, authentication and reboot behavior work together.
+**Delivery over demos.** Edge AI is useful only when streams, rules, alerts, audio, authentication, and reboot behavior work together.
 
 **Safe by default.** Production data is never copied directly into this repository.
 
+**Small, reviewable changes.** Reusable fixes should be isolated, testable, and easy to validate.
+
 ## Security
 
-Please do not publish credentials, personal data, private deployment details or other secrets in issues, logs, examples or pull requests.
+Please do not publish credentials, personal data, private deployment details, private network information, or other secrets in issues, logs, examples, or pull requests.
 
 For vulnerability reporting and safe disclosure guidance, see [SECURITY.md](SECURITY.md).
 
 ## Field notes
 
-The public field notes explain representative deployment problems—such as video/AI freshness, desktop audio, authentication persistence and acceptance testing—without exposing customer assets.
+The public field notes explain representative deployment problems—such as video/AI freshness, desktop audio, authentication persistence, and acceptance testing—without exposing customer assets.
 
 Read: [From Camera Feed to Verifiable Alarm Workflow](docs/CASE_STUDY.md).
 
-## Support
+## Community
 
-Contributions are welcome through pull requests. For deployment, integration or support options, see [SUPPORT.md](SUPPORT.md).
+Contributions are welcome.
 
-## Contributing
+- Found a bug? Use the structured bug report form.
+- Have a reusable feature idea? Open a feature request.
+- Want to contribute code or docs? Read [CONTRIBUTING.md](CONTRIBUTING.md).
+- Need deployment or integration help? See [SUPPORT.md](SUPPORT.md).
 
-Contributions are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting changes.
+The project is especially interested in reproducible edge-AI integration patterns, diagnostics, adapters, tests, and privacy-preserving examples.
 
 ## License
 
