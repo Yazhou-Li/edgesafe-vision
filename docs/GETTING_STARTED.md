@@ -78,7 +78,42 @@ print(engine.evaluate(rule, person_count=5, timestamp=10))
 
 The caller supplies timestamps, which makes persistence and cooldown behavior deterministic in tests.
 
-## 6. Integration path
+## 6. Normalize Frigate / MQTT events
+
+Run the synthetic adapter demo:
+
+```bash
+python examples/adapter_demo.py
+```
+
+Or normalize a Frigate tracked-object message directly:
+
+```python
+from edgesafe.adapters import parse_frigate_mqtt_message
+
+event = parse_frigate_mqtt_message(
+    "frigate/events",
+    {
+        "type": "new",
+        "after": {
+            "id": "demo-event-1",
+            "camera": "demo_entrance",
+            "frame_time": 100.0,
+            "label": "person",
+            "score": 0.91,
+        },
+    },
+)
+
+print(event.to_dict())
+```
+
+The adapter layer does not connect to an MQTT broker itself, so applications
+remain free to use the client library or bridge that fits their environment.
+
+See [Integrations](INTEGRATIONS.md) for the supported topic contracts.
+
+## 7. Integration path
 
 A typical integration is:
 
@@ -103,7 +138,7 @@ See:
 - [Acceptance checklist](ACCEPTANCE_CHECKLIST.md)
 - [Sanitized field case study](CASE_STUDY.md)
 
-## 7. Before connecting real infrastructure
+## 8. Before connecting real infrastructure
 
 Do not paste production credentials or customer data into the repository, examples, Issues, or Pull Requests. Use synthetic addresses and sanitized logs.
 
