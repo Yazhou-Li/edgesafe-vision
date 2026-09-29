@@ -77,6 +77,16 @@ Evidence bundles include platform/Python metadata and PASS/WARN/FAIL checks,
 but intentionally do not collect the machine hostname. HTTP result labels also
 remove embedded URL credentials, query strings, and fragments before output.
 
+For an explicitly shareable evidence bundle, redact environment-specific identifiers:
+
+```bash
+edgesafe-doctor --config examples/doctor.example.json --evidence evidence.json --shareable
+```
+
+Shareable mode is opt-in. It preserves check categories and PASS/WARN/FAIL
+status while deterministically pseudonymizing operator-supplied identifiers.
+The default evidence format remains unchanged.
+
 Review evidence before sharing it externally: TCP targets, file paths, and
 service URLs may still reveal deployment details supplied by the operator.
 
