@@ -37,7 +37,10 @@ Expand cross-platform field diagnostics with:
 
 ## v0.3 — Reproducible demo stack
 
-Provide a complete demo that can be run without production cameras or customer infrastructure.
+- [x] deterministic Python end-to-end pipeline demo
+- [x] synthetic normalized-event fixture
+- [x] end-to-end regression test
+- [ ] optional containerized camera/broker demo stack
 
 ## v0.4 — Integration layer
 

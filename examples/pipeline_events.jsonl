@@ -1,0 +1,8 @@
+{"eventId":"EV-001","cameraId":"CAM-DEMO-01","type":"person","observedAt":0,"attributes":{"personCount":2,"scenario":"synthetic"}}
+{"eventId":"EV-002","cameraId":"CAM-DEMO-01","type":"person","observedAt":1,"attributes":{"personCount":4,"scenario":"synthetic"}}
+{"eventId":"EV-003","cameraId":"CAM-DEMO-01","type":"person","observedAt":3,"attributes":{"personCount":4,"scenario":"synthetic"}}
+{"eventId":"EV-004","cameraId":"CAM-DEMO-01","type":"person","observedAt":4,"attributes":{"personCount":4,"scenario":"synthetic"}}
+{"eventId":"EV-005","cameraId":"CAM-DEMO-01","type":"person","observedAt":5,"attributes":{"personCount":5,"scenario":"synthetic"}}
+{"eventId":"EV-006","cameraId":"CAM-DEMO-01","type":"person","observedAt":8,"attributes":{"personCount":2,"scenario":"synthetic"}}
+{"eventId":"EV-007","cameraId":"CAM-DEMO-01","type":"person","observedAt":12,"attributes":{"personCount":4,"scenario":"synthetic"}}
+{"eventId":"EV-008","cameraId":"CAM-DEMO-01","type":"person","observedAt":15,"attributes":{"personCount":4,"scenario":"synthetic"}}

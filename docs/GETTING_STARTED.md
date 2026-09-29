@@ -138,7 +138,19 @@ remain free to use the client library or bridge that fits their environment.
 
 See [Integrations](INTEGRATIONS.md) for the supported topic contracts.
 
-## 7. Integration path
+## 7. Run the end-to-end synthetic pipeline
+
+```bash
+python examples/end_to_end_demo.py
+```
+
+This deterministic scenario composes the normalized-event adapter, occupancy
+rule engine, and alarm lifecycle with no camera, GPU, broker, or customer
+infrastructure.
+
+See [Reproducible Pipeline Demo](DEMO.md) to customize the JSONL scenario.
+
+## 8. Integration path
 
 A typical integration is:
 
@@ -163,7 +175,7 @@ See:
 - [Acceptance checklist](ACCEPTANCE_CHECKLIST.md)
 - [Sanitized field case study](CASE_STUDY.md)
 
-## 8. Before connecting real infrastructure
+## 9. Before connecting real infrastructure
 
 Do not paste production credentials or customer data into the repository, examples, Issues, or Pull Requests. Use synthetic addresses and sanitized logs.
 

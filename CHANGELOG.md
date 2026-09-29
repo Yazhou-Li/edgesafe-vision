@@ -17,6 +17,7 @@ All notable public changes to EdgeSafe Vision are documented here.
 - Frigate tracked-object and camera-status event adapter
 - broker-agnostic normalized MQTT event adapter
 - synthetic adapter demo and integration guide
+- deterministic end-to-end pipeline demo, JSONL fixture, and regression test
 - EdgeSafe Doctor diagnostic CLI
 - reusable Doctor JSON check plans, file checks, and structured evidence bundles
 - Windows and Linux diagnostic starter scripts

@@ -37,6 +37,7 @@ EdgeSafe Vision 把这些“模型之外”的最后一公里问题，做成可�
 - EdgeSafe Doctor：跨平台、只读、无第三方依赖的诊断 CLI，支持检查计划与结构化证据包
 - Windows / Ubuntu 诊断脚本
 - 脱敏规则示例和 Demo
+- 带回归测试的确定性端到端合成流水线 Demo
 - 回归测试与 GitHub Actions CI
 - 架构文档、验收清单和真实交付经验脱敏案例
 
@@ -62,11 +63,12 @@ python -m pip install -e .
 python -m unittest discover -s tests -v
 python examples/demo.py
 python examples/adapter_demo.py
+python examples/end_to_end_demo.py
 edgesafe-doctor --http http://127.0.0.1:5000
 edgesafe-doctor --config examples/doctor.example.json --evidence evidence.json
 ```
 
-更完整的上手路径见：[Getting Started](docs/GETTING_STARTED.md)；适配器契约和示例见：[Integrations](docs/INTEGRATIONS.md)。
+更完整的上手路径见：[Getting Started](docs/GETTING_STARTED.md)；适配器契约见：[Integrations](docs/INTEGRATIONS.md)；确定性端到端场景见：[Reproducible Demo](docs/DEMO.md)。
 
 所有示例都使用公开、合成或脱敏数据，不依赖客户生产环境。
 
