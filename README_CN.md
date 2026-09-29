@@ -33,6 +33,7 @@ EdgeSafe Vision 把这些“模型之外”的最后一公里问题，做成可�
 - 视频 / AI 元数据新鲜度监控：识别旧画面、旧框、时序偏差
 - 报警生命周期：打开、确认、恢复
 - 统一事件模型：把 Frigate / MQTT / Webhook / 自定义检测结果转换为统一规则输入
+- Frigate tracked-object 事件与摄像头状态 MQTT 适配器
 - EdgeSafe Doctor：跨平台、只读、无第三方依赖的诊断 CLI
 - Windows / Ubuntu 诊断脚本
 - 脱敏规则示例和 Demo
@@ -60,10 +61,11 @@ cd edgesafe-vision
 python -m pip install -e .
 python -m unittest discover -s tests -v
 python examples/demo.py
+python examples/adapter_demo.py
 edgesafe-doctor --http http://127.0.0.1:5000
 ```
 
-更完整的上手路径见：[Getting Started](docs/GETTING_STARTED.md)。
+更完整的上手路径见：[Getting Started](docs/GETTING_STARTED.md)；适配器契约和示例见：[Integrations](docs/INTEGRATIONS.md)。
 
 所有示例都使用公开、合成或脱敏数据，不依赖客户生产环境。
 
