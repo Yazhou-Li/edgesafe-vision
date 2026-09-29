@@ -14,7 +14,9 @@ authors = [
 ]
 keywords = [
   "edge-ai",
+  "edge-computing",
   "computer-vision",
+  "video-analytics",
   "frigate",
   "openvino",
   "rtsp",
@@ -22,10 +24,18 @@ keywords = [
   "fde"
 ]
 classifiers = [
+  "Development Status :: 3 - Alpha",
   "Programming Language :: Python :: 3",
   "License :: OSI Approved :: Apache Software License",
-  "Operating System :: OS Independent"
+  "Operating System :: OS Independent",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence"
 ]
+
+[project.urls]
+Homepage = "https://github.com/Yazhou-Li/edgesafe-vision"
+Repository = "https://github.com/Yazhou-Li/edgesafe-vision"
+Issues = "https://github.com/Yazhou-Li/edgesafe-vision/issues"
+Documentation = "https://github.com/Yazhou-Li/edgesafe-vision/tree/main/docs"
 
 [project.scripts]
 edgesafe-doctor = "edgesafe.doctor:main"
