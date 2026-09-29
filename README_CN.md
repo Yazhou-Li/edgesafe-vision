@@ -72,6 +72,15 @@ edgesafe-doctor --config examples/doctor.example.json --evidence evidence.json
 
 所有示例都使用公开、合成或脱敏数据，不依赖客户生产环境。
 
+## 关联项目：AI Delivery Doctor
+
+EdgeSafe Vision 是具体的边缘视觉 AI 工程项目；其中“证据优先、逐段验证交付链”的方法，正在被抽象为通用开源项目 [AI Delivery Doctor](https://github.com/Yazhou-Li/ai-delivery-doctor)。
+
+- 做摄像头、事件、规则、报警、现场诊断：优先看 EdgeSafe Vision；
+- 做更通用的 Agent、RAG、MCP、模型 API 和 AI 应用交付验收：看 AI Delivery Doctor。
+
+两个项目共享同一个核心判断：**上游组件看起来正常，不等于最终用户结果已经被证明。**
+
 ## 最小规则示例
 
 ```python

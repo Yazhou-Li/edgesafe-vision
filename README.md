@@ -138,6 +138,12 @@ It is designed for skills-compatible coding agents and assistants that can read 
 
 The examples are synthetic and do not contain production credentials, customer data, or private deployment material.
 
+## Related project: AI Delivery Doctor
+
+EdgeSafe Vision is the domain-specific edge-AI project. Its evidence-first delivery lessons are also being generalized into [AI Delivery Doctor](https://github.com/Yazhou-Li/ai-delivery-doctor), a vendor-neutral toolkit for ordered AI delivery contracts, deterministic checks, evidence comparison, and the first unsupported required transition.
+
+Use EdgeSafe Vision when you need reusable camera/event/rule/alarm engineering. Use AI Delivery Doctor when you want the same acceptance discipline across broader Agent, RAG, MCP, model-API, and AI application delivery paths.
+
 ## Minimal rule example
 
 ```python
