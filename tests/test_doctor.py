@@ -4,12 +4,14 @@ import unittest
 from pathlib import Path
 
 from edgesafe.doctor import (
+    CheckResult,
     _safe_url_label,
     baseline_results,
     build_evidence_bundle,
     check_file,
     load_check_config,
     parse_target,
+    render_markdown_report,
     write_evidence_bundle,
 )
 
@@ -98,6 +100,21 @@ class DoctorTests(unittest.TestCase):
             self.assertEqual(result, target)
             payload = json.loads(target.read_text(encoding="utf-8"))
             self.assertEqual(payload["schema"], "edgesafe-evidence-v1")
+
+
+    def test_markdown_report_preserves_order_counts_and_first_failure(self):
+        results = [
+            CheckResult("python", "PASS", "ok"),
+            CheckResult("disk", "WARN", "low"),
+            CheckResult("tcp:demo:1", "FAIL", "refused"),
+            CheckResult("file:demo", "FAIL", "missing"),
+        ]
+        report = render_markdown_report(results)
+        self.assertIn("Summary: 1 PASS · 1 WARN · 2 FAIL", report)
+        self.assertLess(report.index("PASS python"), report.index("WARN disk"))
+        self.assertLess(report.index("WARN disk"), report.index("FAIL tcp:demo:1"))
+        self.assertIn("Start by reviewing `tcp:demo:1`", report)
+        self.assertIn("triage hint, not a proven root cause", report)
 
 
 if __name__ == "__main__":
