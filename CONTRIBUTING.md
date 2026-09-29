@@ -2,6 +2,8 @@
 
 Thanks for your interest in EdgeSafe Vision.
 
+If you are using a coding agent, read [AGENTS.md](AGENTS.md) before making changes. It contains the repository's operational boundaries, validation commands, and privacy rules.
+
 The project favors small, evidence-driven contributions that make edge-AI systems easier to deploy, diagnose, operate, and validate.
 
 ## Good contribution areas
