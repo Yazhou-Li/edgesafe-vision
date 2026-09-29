@@ -1,0 +1,6 @@
+{
+  "name": "operator-feedback-prerequisites",
+  "proves": ["Local evidence/config files required by the synthetic operator workflow are readable."],
+  "doesNotProve": ["Human acknowledgement", "incident response", "production safety"],
+  "checks": {"files": ["./examples/rules.example.json", "./examples/events.example.jsonl"]}
+}
