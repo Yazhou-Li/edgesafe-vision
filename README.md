@@ -38,7 +38,7 @@ EdgeSafe Vision packages those "last-mile" engineering problems into reusable co
 - Explicit alarm lifecycle
 - Detector-agnostic event normalization
 - Frigate tracked-object and camera-status MQTT adapters
-- Dependency-free, read-only EdgeSafe Doctor CLI
+- Dependency-free, read-only EdgeSafe Doctor CLI with reusable check plans and structured evidence bundles
 - Windows / Ubuntu deployment diagnostics
 - Reboot / persistence / acceptance thinking for field delivery
 - Sanitized field notes based on real delivery lessons
@@ -110,6 +110,7 @@ python -m unittest discover -s tests -v
 python examples/demo.py
 python examples/adapter_demo.py
 edgesafe-doctor --http http://127.0.0.1:5000
+edgesafe-doctor --config examples/doctor.example.json --evidence evidence.json
 ```
 
 For a guided walkthrough, see [Getting Started](docs/GETTING_STARTED.md). For adapter contracts and examples, see [Integrations](docs/INTEGRATIONS.md).
