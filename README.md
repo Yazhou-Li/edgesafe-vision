@@ -39,6 +39,7 @@ EdgeSafe Vision packages those "last-mile" engineering problems into reusable co
 - Detector-agnostic event normalization
 - Frigate tracked-object and camera-status MQTT adapters
 - Dependency-free, read-only EdgeSafe Doctor CLI with reusable check plans and structured evidence bundles
+- Portable Agent Skill for evidence-driven edge-AI deployment diagnosis
 - Windows / Ubuntu deployment diagnostics
 - Reboot / persistence / acceptance thinking for field delivery
 - Deterministic end-to-end synthetic pipeline demo with regression coverage
@@ -67,6 +68,7 @@ The repository contains working, customer-agnostic reference code:
 - `src/edgesafe/events.py` — normalized detector-agnostic event contract
 - `src/edgesafe/adapters/` — Frigate and broker-agnostic MQTT adapters
 - `src/edgesafe/doctor.py` — dependency-free cross-platform diagnostic CLI
+- `.agents/skills/edge-ai-deployment-doctor/` — portable Agent Skill for safe, evidence-driven field diagnosis
 - `tests/` — regression tests for public reference modules
 - `examples/` — runnable demo and sanitized configuration
 - `scripts/` — Windows / Linux non-invasive diagnostic starters
@@ -116,6 +118,23 @@ edgesafe-doctor --config examples/doctor.example.json --evidence evidence.json
 ```
 
 For a guided walkthrough, see [Getting Started](docs/GETTING_STARTED.md). For adapter contracts, see [Integrations](docs/INTEGRATIONS.md). For the deterministic end-to-end scenario, see [Reproducible Demo](docs/DEMO.md).
+
+
+## Agent Skill
+
+EdgeSafe Vision ships a portable [Agent Skills](https://agentskills.io) workflow at
+`.agents/skills/edge-ai-deployment-doctor/`.
+
+The skill turns the project's field-diagnostics practice into a repeatable agent workflow:
+
+- start with non-invasive baseline checks;
+- collect only the minimum sanitized evidence needed;
+- interpret PASS / WARN / FAIL results without guessing;
+- separate reachability, configuration, rule, and operator-feedback failures;
+- produce a concise handoff with observed evidence, likely fault domain, and next verification step.
+
+It is designed for skills-compatible coding agents and assistants that can read repository files and run local commands. The skill does not grant credentials, bypass access controls, or replace site-specific safety validation.
+
 
 The examples are synthetic and do not contain production credentials, customer data, or private deployment material.
 

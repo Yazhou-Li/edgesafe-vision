@@ -50,3 +50,11 @@ Expand cross-platform field diagnostics with:
 - sample webhook adapter
 - camera health model
 - end-to-end demo tests
+
+## v0.5 — Agent-ready operations
+
+- [x] portable Agent Skill for deployment diagnosis
+- [x] evidence-driven triage playbook
+- [x] synthetic reusable check-plan asset
+- [x] repository test that validates the skill manifest and bundled asset
+- [ ] additional portable skills only when backed by a real, repeated delivery workflow

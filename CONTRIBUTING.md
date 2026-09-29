@@ -63,6 +63,16 @@ Strong feature requests describe:
 
 Product-specific customizations are usually better expressed as adapters or extension points rather than hard-coded core behavior.
 
+## Agent Skill contributions
+
+Agent Skills must remain small, portable, and evidence-driven.
+
+- keep the required `SKILL.md` metadata valid and aligned with the parent directory name;
+- prefer reusable procedures over one-off prompts;
+- never bundle customer credentials, private endpoints, production payloads, or site-specific secrets;
+- put detailed playbooks in `references/` and reusable templates in `assets/` instead of bloating the main skill;
+- use synthetic examples and make every external side effect explicit.
+
 ## Pull requests
 
 Before opening a PR:
