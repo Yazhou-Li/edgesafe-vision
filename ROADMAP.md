@@ -21,8 +21,8 @@
 - [x] Automated tests and CI
 - [ ] Repository-wide secret scan before importing any production-derived file
 - [x] Normalized edge-event contract
-- [ ] Frigate event adapter
-- [ ] MQTT normalized event adapter
+- [x] Frigate event adapter
+- [x] MQTT normalized event adapter
 
 ## v0.2 — EdgeSafe Doctor
 
@@ -42,8 +42,8 @@ Provide a complete demo that can be run without production cameras or customer i
 ## v0.4 — Integration layer
 
 - normalized event schema
-- Frigate adapter
-- MQTT adapter
+- [x] Frigate adapter
+- [x] MQTT adapter
 - sample webhook adapter
 - camera health model
 - end-to-end demo tests
