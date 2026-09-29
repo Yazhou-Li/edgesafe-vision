@@ -40,6 +40,12 @@ Baseline checks:
 edgesafe-doctor
 ```
 
+Resolve a hostname without opening a TCP/HTTP connection:
+
+```bash
+edgesafe-doctor --dns localhost
+```
+
 Probe a local HTTP endpoint:
 
 ```bash
@@ -67,6 +73,7 @@ A check-plan file can contain:
 
 ```json
 {
+  "dns": ["localhost"],
   "http": ["http://127.0.0.1:5000"],
   "tcp": ["127.0.0.1:1883"],
   "files": ["./pyproject.toml"]
