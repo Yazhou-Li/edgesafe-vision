@@ -1,12 +1,15 @@
 import json
+import socket
 import tempfile
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 from edgesafe.doctor import (
     _safe_url_label,
     baseline_results,
     build_evidence_bundle,
+    check_dns,
     check_file,
     load_check_config,
     parse_target,
@@ -22,6 +25,23 @@ class DoctorTests(unittest.TestCase):
         names = {item.name for item in baseline_results()}
         self.assertIn("python", names)
         self.assertIn("disk", names)
+
+    def test_dns_check_passes_on_resolution_and_fails_on_error(self):
+        with patch("edgesafe.doctor.socket.getaddrinfo") as resolver:
+            resolver.return_value = [
+                (2, 1, 6, "", ("127.0.0.1", 0)),
+                (2, 1, 6, "", ("127.0.0.1", 0)),
+            ]
+            result = check_dns("example.test")
+        self.assertEqual(result.status, "PASS")
+        self.assertEqual(result.detail, "1 address(es) resolved")
+
+        with patch(
+            "edgesafe.doctor.socket.getaddrinfo",
+            side_effect=socket.gaierror("not found"),
+        ):
+            failed = check_dns("missing.example")
+        self.assertEqual(failed.status, "FAIL")
 
     def test_file_check(self):
         with tempfile.TemporaryDirectory() as tmp:
