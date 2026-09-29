@@ -14,6 +14,9 @@ All notable public changes to EdgeSafe Vision are documented here.
 - video / AI metadata freshness monitor
 - alarm lifecycle model
 - normalized edge-event contract
+- Frigate tracked-object and camera-status event adapter
+- broker-agnostic normalized MQTT event adapter
+- synthetic adapter demo and integration guide
 - EdgeSafe Doctor diagnostic CLI
 - Windows and Linux diagnostic starter scripts
 - synthetic demo configuration and event examples
