@@ -117,7 +117,7 @@ edgesafe-doctor --http http://127.0.0.1:5000
 edgesafe-doctor --config examples/doctor.example.json --evidence evidence.json
 ```
 
-For a guided walkthrough, see [Getting Started](docs/GETTING_STARTED.md). For adapter contracts, see [Integrations](docs/INTEGRATIONS.md). For the deterministic end-to-end scenario, see [Reproducible Demo](docs/DEMO.md).
+For a guided walkthrough, see [Getting Started](docs/GETTING_STARTED.md). For a judge/user-friendly three-minute walkthrough, see [Reproducible Showcase](docs/SHOWCASE.md). For adapter contracts, see [Integrations](docs/INTEGRATIONS.md). For the deterministic end-to-end scenario, see [Reproducible Demo](docs/DEMO.md).
 
 
 ## Agent Skill

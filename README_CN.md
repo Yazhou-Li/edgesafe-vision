@@ -68,7 +68,7 @@ edgesafe-doctor --http http://127.0.0.1:5000
 edgesafe-doctor --config examples/doctor.example.json --evidence evidence.json
 ```
 
-更完整的上手路径见：[Getting Started](docs/GETTING_STARTED.md)；适配器契约见：[Integrations](docs/INTEGRATIONS.md)；确定性端到端场景见：[Reproducible Demo](docs/DEMO.md)。
+更完整的上手路径见：[Getting Started](docs/GETTING_STARTED.md)；三分钟可复现展示见：[中文 Showcase](docs/SHOWCASE_CN.md)；适配器契约见：[Integrations](docs/INTEGRATIONS.md)；确定性端到端场景见：[Reproducible Demo](docs/DEMO.md)。
 
 所有示例都使用公开、合成或脱敏数据，不依赖客户生产环境。
 
