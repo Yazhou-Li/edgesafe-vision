@@ -18,6 +18,7 @@ All notable public changes to EdgeSafe Vision are documented here.
 - broker-agnostic normalized MQTT event adapter
 - synthetic adapter demo and integration guide
 - EdgeSafe Doctor diagnostic CLI
+- reusable Doctor JSON check plans, file checks, and structured evidence bundles
 - Windows and Linux diagnostic starter scripts
 - synthetic demo configuration and event examples
 - automated unit tests and GitHub Actions CI
@@ -28,6 +29,7 @@ All notable public changes to EdgeSafe Vision are documented here.
 - expanded CI coverage across supported Python versions
 - improved English and Chinese onboarding for users and contributors
 - enriched Python package metadata with project URLs and discovery keywords
+- HTTP diagnostic labels now redact URL credentials, query strings, and fragments
 
 ### Security
 
