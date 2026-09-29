@@ -46,7 +46,7 @@ Probe a local HTTP endpoint:
 edgesafe-doctor --http http://127.0.0.1:5000
 ```
 
-Probe HTTP and TCP targets and return machine-readable evidence:
+Probe HTTP and TCP targets and return machine-readable output:
 
 ```bash
 edgesafe-doctor \
@@ -54,6 +54,31 @@ edgesafe-doctor \
   --tcp 127.0.0.1:1883 \
   --json
 ```
+
+Run a reusable check plan and write a structured evidence bundle:
+
+```bash
+edgesafe-doctor \
+  --config examples/doctor.example.json \
+  --evidence evidence.json
+```
+
+A check-plan file can contain:
+
+```json
+{
+  "http": ["http://127.0.0.1:5000"],
+  "tcp": ["127.0.0.1:1883"],
+  "files": ["./pyproject.toml"]
+}
+```
+
+Evidence bundles include platform/Python metadata and PASS/WARN/FAIL checks,
+but intentionally do not collect the machine hostname. HTTP result labels also
+remove embedded URL credentials, query strings, and fragments before output.
+
+Review evidence before sharing it externally: TCP targets, file paths, and
+service URLs may still reveal deployment details supplied by the operator.
 
 EdgeSafe Doctor is read-only by design.
 

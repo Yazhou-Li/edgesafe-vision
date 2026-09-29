@@ -31,7 +31,7 @@ Expand cross-platform field diagnostics with:
 - Frigate camera/process FPS checks
 - audio-path verification
 - rule/config consistency checks
-- structured evidence bundle
+- [x] structured evidence bundle
 - Windows scheduled-task checks
 - Linux systemd checks
 
