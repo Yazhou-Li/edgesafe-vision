@@ -1,0 +1,45 @@
+name: Feature request
+description: Propose a reusable capability for edge-AI deployment, diagnostics, rules, or acceptance
+title: "[Feature] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Good feature requests describe a real operational problem and a reusable outcome, not just a product-specific customization.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What real deployment or integration problem are you trying to solve?
+    validations:
+      required: true
+  - type: textarea
+    id: use_case
+    attributes:
+      label: Use case
+      description: Describe the environment and workflow using sanitized, customer-agnostic information.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed capability
+      description: What reusable behavior or API would be useful?
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Acceptance criteria
+      description: How could the community verify that the feature works?
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety check
+      options:
+        - label: This request contains no production secrets or customer-identifying information.
+          required: true
