@@ -7,6 +7,7 @@ from .adapters import (
     parse_normalized_mqtt_event,
 )
 from .alarms import Alarm, AlarmState
+from .camera_health import CameraHealthReport, CameraHealthState, evaluate_camera_health
 from .events import EdgeEvent, EventType
 from .freshness import FreshnessMonitor, FreshnessPolicy, FreshnessReport
 from .rules import OccupancyRule, OccupancyRuleEngine, RuleDecision
@@ -16,6 +17,8 @@ __all__ = [
     "Alarm",
     "UnsupportedMqttMessage",
     "AlarmState",
+    "CameraHealthReport",
+    "CameraHealthState",
     "EdgeEvent",
     "EventType",
     "FreshnessMonitor",
@@ -26,6 +29,7 @@ __all__ = [
     "RuleDecision",
     "ZoneIntrusionEngine",
     "ZoneIntrusionRule",
+    "evaluate_camera_health",
     "parse_frigate_event",
     "parse_frigate_mqtt_message",
     "parse_normalized_mqtt_event",
