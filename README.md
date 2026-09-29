@@ -41,6 +41,7 @@ EdgeSafe Vision packages those "last-mile" engineering problems into reusable co
 - Dependency-free, read-only EdgeSafe Doctor CLI with reusable check plans and structured evidence bundles
 - Windows / Ubuntu deployment diagnostics
 - Reboot / persistence / acceptance thinking for field delivery
+- Deterministic end-to-end synthetic pipeline demo with regression coverage
 - Sanitized field notes based on real delivery lessons
 - Automated tests and CI across supported Python versions
 
@@ -109,11 +110,12 @@ python -m pip install -e .
 python -m unittest discover -s tests -v
 python examples/demo.py
 python examples/adapter_demo.py
+python examples/end_to_end_demo.py
 edgesafe-doctor --http http://127.0.0.1:5000
 edgesafe-doctor --config examples/doctor.example.json --evidence evidence.json
 ```
 
-For a guided walkthrough, see [Getting Started](docs/GETTING_STARTED.md). For adapter contracts and examples, see [Integrations](docs/INTEGRATIONS.md).
+For a guided walkthrough, see [Getting Started](docs/GETTING_STARTED.md). For adapter contracts, see [Integrations](docs/INTEGRATIONS.md). For the deterministic end-to-end scenario, see [Reproducible Demo](docs/DEMO.md).
 
 The examples are synthetic and do not contain production credentials, customer data, or private deployment material.
 
