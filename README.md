@@ -37,6 +37,7 @@ EdgeSafe Vision packages those "last-mile" engineering problems into reusable co
 - Video / AI metadata freshness and temporal-skew checks
 - Explicit alarm lifecycle
 - Detector-agnostic event normalization
+- Frigate tracked-object and camera-status MQTT adapters
 - Dependency-free, read-only EdgeSafe Doctor CLI
 - Windows / Ubuntu deployment diagnostics
 - Reboot / persistence / acceptance thinking for field delivery
@@ -63,6 +64,7 @@ The repository contains working, customer-agnostic reference code:
 - `src/edgesafe/freshness.py` — video / AI metadata freshness and temporal-skew monitor
 - `src/edgesafe/alarms.py` — explicit alarm lifecycle model
 - `src/edgesafe/events.py` — normalized detector-agnostic event contract
+- `src/edgesafe/adapters/` — Frigate and broker-agnostic MQTT adapters
 - `src/edgesafe/doctor.py` — dependency-free cross-platform diagnostic CLI
 - `tests/` — regression tests for public reference modules
 - `examples/` — runnable demo and sanitized configuration
@@ -106,10 +108,11 @@ cd edgesafe-vision
 python -m pip install -e .
 python -m unittest discover -s tests -v
 python examples/demo.py
+python examples/adapter_demo.py
 edgesafe-doctor --http http://127.0.0.1:5000
 ```
 
-For a guided walkthrough, see [Getting Started](docs/GETTING_STARTED.md).
+For a guided walkthrough, see [Getting Started](docs/GETTING_STARTED.md). For adapter contracts and examples, see [Integrations](docs/INTEGRATIONS.md).
 
 The examples are synthetic and do not contain production credentials, customer data, or private deployment material.
 
