@@ -1,0 +1,73 @@
+name: Bug report
+description: Report a reproducible problem in EdgeSafe Vision
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug.
+
+        **Do not include production credentials, private RTSP URLs, tokens, license material, customer identities, private IPs, or unsanitized logs.**
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - EdgeSafe Doctor
+        - Occupancy / overcrowding rules
+        - Zone intrusion
+        - Event normalization
+        - Freshness monitoring
+        - Alarm lifecycle
+        - Windows diagnostics
+        - Linux diagnostics
+        - Documentation / examples
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      placeholder: "v0.1.0 or commit SHA"
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Python version, and relevant edge stack versions.
+      placeholder: "Ubuntu 24.04, Python 3.11, Frigate ..."
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed behavior
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Minimal reproduction
+      description: Provide the smallest reproducible sequence or synthetic input.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sanitized evidence
+      description: Logs, PASS/WARN/FAIL output, traceback, or screenshots with sensitive data removed.
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety check
+      options:
+        - label: I removed credentials, customer data, private deployment details, and other secrets.
+          required: true
