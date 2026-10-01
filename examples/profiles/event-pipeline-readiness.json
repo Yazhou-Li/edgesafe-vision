@@ -1,0 +1,6 @@
+{
+  "name": "event-pipeline-readiness",
+  "proves": ["Synthetic event fixture and local endpoint prerequisites are present."],
+  "doesNotProve": ["Live camera delivery", "broker durability", "operator response"],
+  "checks": {"files": ["./examples/events.example.jsonl"], "http": ["http://127.0.0.1:5000/health"]}
+}

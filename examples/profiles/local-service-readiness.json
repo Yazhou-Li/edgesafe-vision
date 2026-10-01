@@ -1,0 +1,6 @@
+{
+  "name": "local-service-readiness",
+  "proves": ["Configured loopback service endpoints respond to bounded Doctor checks."],
+  "doesNotProve": ["Application correctness", "production readiness", "camera health"],
+  "checks": {"http": ["http://127.0.0.1:5000/health"], "tcp": ["127.0.0.1:1883"]}
+}
