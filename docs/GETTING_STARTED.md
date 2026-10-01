@@ -103,7 +103,23 @@ print(engine.evaluate(rule, person_count=5, timestamp=10))
 
 The caller supplies timestamps, which makes persistence and cooldown behavior deterministic in tests.
 
-## 6. Normalize Frigate / MQTT events
+## 6. Inspect OS service state safely
+
+The optional service helper is read-only and never starts, stops, restarts, or
+enables a service:
+
+```python
+from edgesafe.service_checks import check_service
+
+print(check_service("edgesafe-demo.service"))
+```
+
+Linux uses `systemctl is-active`. Windows uses a non-interactive Scheduled
+Task state query. Commands are invoked as argument lists with `shell=False`;
+unsupported platforms or missing platform tools return WARN. Windows behavior
+is fixture/mock tested in the existing Linux CI environment.
+
+## 7. Normalize Frigate / MQTT events
 
 Run the synthetic adapter demo:
 
@@ -138,7 +154,7 @@ remain free to use the client library or bridge that fits their environment.
 
 See [Integrations](INTEGRATIONS.md) for the supported topic contracts.
 
-## 7. Run the end-to-end synthetic pipeline
+## 8. Run the end-to-end synthetic pipeline
 
 ```bash
 python examples/end_to_end_demo.py
@@ -150,7 +166,7 @@ infrastructure.
 
 See [Reproducible Pipeline Demo](DEMO.md) to customize the JSONL scenario.
 
-## 8. Integration path
+## 9. Integration path
 
 A typical integration is:
 
@@ -175,7 +191,7 @@ See:
 - [Acceptance checklist](ACCEPTANCE_CHECKLIST.md)
 - [Sanitized field case study](CASE_STUDY.md)
 
-## 9. Before connecting real infrastructure
+## 10. Before connecting real infrastructure
 
 Do not paste production credentials or customer data into the repository, examples, Issues, or Pull Requests. Use synthetic addresses and sanitized logs.
 
