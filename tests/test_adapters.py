@@ -6,6 +6,7 @@ from edgesafe.adapters import (
     parse_frigate_event,
     parse_frigate_mqtt_message,
     parse_normalized_mqtt_event,
+    parse_webhook_event,
 )
 from edgesafe.events import EventType
 
@@ -162,3 +163,41 @@ class MqttAdapterTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class WebhookAdapterTests(unittest.TestCase):
+    def setUp(self):
+        self.payload = {
+            "eventId": "EV-WEB-1",
+            "cameraId": "CAM-WEB-1",
+            "type": "person",
+            "observedAt": 123.5,
+            "confidence": 0.9,
+            "trackId": "track-web-1",
+            "attributes": {"source": "synthetic-webhook"},
+        }
+
+    def test_accepts_mapping_json_string_and_utf8_bytes(self):
+        for payload in (
+            self.payload,
+            json.dumps(self.payload),
+            json.dumps(self.payload).encode("utf-8"),
+        ):
+            event = parse_webhook_event(payload)
+            self.assertEqual(event.event_id, "EV-WEB-1")
+            self.assertEqual(event.event_type, EventType.PERSON)
+            self.assertEqual(event.attributes["source"], "synthetic-webhook")
+
+    def test_rejects_malformed_json_and_non_object_json(self):
+        with self.assertRaisesRegex(ValueError, "valid JSON"):
+            parse_webhook_event("{not-json")
+        with self.assertRaisesRegex(ValueError, "JSON object"):
+            parse_webhook_event('["not", "an", "object"]')
+
+    def test_rejects_invalid_utf8_and_missing_core_field(self):
+        with self.assertRaisesRegex(ValueError, "UTF-8"):
+            parse_webhook_event(b"\xff")
+        incomplete = dict(self.payload)
+        incomplete.pop("cameraId")
+        with self.assertRaisesRegex(ValueError, "missing cameraId"):
+            parse_webhook_event(incomplete)
