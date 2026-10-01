@@ -77,6 +77,19 @@ Evidence bundles include platform/Python metadata and PASS/WARN/FAIL checks,
 but intentionally do not collect the machine hostname. HTTP result labels also
 remove embedded URL credentials, query strings, and fragments before output.
 
+Render existing results as a deterministic Markdown handoff from Python without
+re-running any checks:
+
+```python
+from edgesafe.doctor import render_markdown_report
+
+print(render_markdown_report(results))
+```
+
+The report preserves supplied check order, summarizes PASS/WARN/FAIL counts,
+and points to the first failing check only as a triage hint, never as a proven
+root cause.
+
 Review evidence before sharing it externally: TCP targets, file paths, and
 service URLs may still reveal deployment details supplied by the operator.
 
