@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 from edgesafe.doctor import (
+    CheckResult,
     _safe_url_label,
     baseline_results,
     build_evidence_bundle,
@@ -98,6 +99,26 @@ class DoctorTests(unittest.TestCase):
             self.assertEqual(result, target)
             payload = json.loads(target.read_text(encoding="utf-8"))
             self.assertEqual(payload["schema"], "edgesafe-evidence-v1")
+
+
+    def test_shareable_evidence_is_opt_in_and_deterministically_redacted(self):
+        results = [
+            CheckResult("tcp:private.internal:443", "PASS", "connection established"),
+            CheckResult("file:/srv/customer/secret.env", "FAIL", "not found"),
+        ]
+        normal = build_evidence_bundle(results)
+        shared = build_evidence_bundle(results, shareable=True)
+        shared_again = build_evidence_bundle(results, shareable=True)
+
+        self.assertEqual(normal["checks"][0]["name"], "tcp:private.internal:443")
+        self.assertEqual(shared["checks"][0]["status"], "PASS")
+        self.assertEqual(shared["checks"][1]["status"], "FAIL")
+        self.assertEqual(shared["checks"], shared_again["checks"])
+        serialized = json.dumps(shared["checks"])
+        self.assertNotIn("private.internal", serialized)
+        self.assertNotIn("/srv/customer", serialized)
+        self.assertIn("tcp:[redacted-", shared["checks"][0]["name"])
+        self.assertIn("file:[redacted-", shared["checks"][1]["name"])
 
 
 if __name__ == "__main__":
