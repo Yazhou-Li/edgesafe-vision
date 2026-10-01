@@ -10,6 +10,7 @@ from edgesafe.doctor import (
     check_file,
     load_check_config,
     parse_target,
+    TOOL_VERSION,
     write_evidence_bundle,
 )
 
@@ -83,6 +84,7 @@ class DoctorTests(unittest.TestCase):
         bundle = build_evidence_bundle(baseline_results())
 
         self.assertEqual(bundle["schema"], "edgesafe-evidence-v1")
+        self.assertEqual(bundle["toolVersion"], TOOL_VERSION)
         self.assertIn("platform", bundle)
         self.assertIn("checks", bundle)
         self.assertNotIn("hostname", bundle)

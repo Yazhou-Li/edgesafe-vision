@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+from importlib.metadata import PackageNotFoundError, version
 import platform
 import shutil
 import socket
@@ -14,6 +15,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Iterable, List, Optional
 from urllib.parse import urlsplit, urlunsplit
+
+try:
+    TOOL_VERSION = version("edgesafe-vision")
+except PackageNotFoundError:
+    TOOL_VERSION = "unknown"
 
 
 @dataclass
@@ -197,6 +203,7 @@ def build_evidence_bundle(results: Iterable[CheckResult]) -> dict:
 
     return {
         "schema": "edgesafe-evidence-v1",
+        "toolVersion": TOOL_VERSION,
         "generatedAt": datetime.now(timezone.utc).isoformat(),
         "platform": {
             "system": platform.system(),
