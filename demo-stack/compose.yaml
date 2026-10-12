@@ -1,0 +1,21 @@
+services:
+  broker:
+    image: eclipse-mosquitto:2
+    volumes:
+      - ./mosquitto-no-auth.conf:/mosquitto/config/mosquitto.conf:ro
+    command: ["mosquitto", "-c", "/mosquitto/config/mosquitto.conf"]
+    healthcheck:
+      test: ["CMD", "mosquitto_sub", "-h", "127.0.0.1", "-t", "$$SYS/broker/version", "-C", "1", "-W", "2"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  edgesafe-demo:
+    build:
+      context: ..
+      dockerfile: demo-stack/Dockerfile
+    depends_on:
+      broker:
+        condition: service_healthy
+    command: ["python", "examples/end_to_end_demo.py"]
+    restart: "no"
