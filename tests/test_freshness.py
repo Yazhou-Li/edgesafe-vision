@@ -33,5 +33,18 @@ class FreshnessMonitorTests(unittest.TestCase):
         self.assertFalse(report.aligned)
 
 
+    def test_unknown_camera_is_not_healthy(self):
+        # A camera with no observed video or metadata must not be
+        # reported as fresh or aligned: absence of evidence is not
+        # evidence of health.
+        report = self.monitor.report("CAM-NEW", 100.0)
+        self.assertFalse(report.video_fresh)
+        self.assertFalse(report.metadata_fresh)
+        self.assertFalse(report.aligned)
+        self.assertFalse(report.healthy)
+        self.assertIsNone(report.video_age)
+        self.assertIsNone(report.metadata_age)
+
+
 if __name__ == "__main__":
     unittest.main()
