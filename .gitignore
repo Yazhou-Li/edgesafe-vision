@@ -22,6 +22,7 @@ snapshots/
 *.trace
 
 # Local media
+temp_auto_push.bat
 *.mp4
 *.avi
 *.mov
@@ -46,5 +47,6 @@ build/
 # IDE / OS
 .DS_Store
 Thumbs.db
-.vscode/
 .idea/
+.gitignore
+branch_structure.json

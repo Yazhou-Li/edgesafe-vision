@@ -2,6 +2,8 @@
 
 Thanks for your interest in EdgeSafe Vision.
 
+New here? Start with the [Contributor Quick Start](docs/CONTRIBUTOR_QUICKSTART.md) — a fresh clone in five minutes, how changes flow through the codebase, a worked example of a small safe contribution, and the common mistakes to avoid when sharing logs or deployment details.
+
 If you are using a coding agent, read [AGENTS.md](AGENTS.md) before making changes. It contains the repository's operational boundaries, validation commands, and privacy rules.
 
 The project favors small, evidence-driven contributions that make edge-AI systems easier to deploy, diagnose, operate, and validate.
