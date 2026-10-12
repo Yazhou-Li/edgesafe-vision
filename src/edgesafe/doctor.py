@@ -208,6 +208,30 @@ def build_evidence_bundle(results: Iterable[CheckResult]) -> dict:
     }
 
 
+
+def render_markdown_report(results: Iterable[CheckResult]) -> str:
+    """Render existing check results as a deterministic Markdown handoff."""
+    items = list(results)
+    counts = {status: sum(item.status == status for item in items) for status in ("PASS", "WARN", "FAIL")}
+    lines = [
+        "# EdgeSafe Diagnostic Report",
+        "",
+        f"Summary: {counts['PASS']} PASS · {counts['WARN']} WARN · {counts['FAIL']} FAIL",
+        "",
+        "## Findings",
+    ]
+    lines.extend(f"- {item.status} {item.name} — {item.detail}" for item in items)
+    first_failure = next((item for item in items if item.status == "FAIL"), None)
+    lines.extend(["", "## Next verification"])
+    if first_failure is None:
+        lines.append("No failing check was supplied. Continue with the next planned verification.")
+    else:
+        lines.append(
+            f"Start by reviewing `{first_failure.name}`. This is a triage hint, not a proven root cause."
+        )
+    return "\n".join(lines) + "\n"
+
+
 def write_evidence_bundle(path: str, results: Iterable[CheckResult]) -> Path:
     target = Path(path).expanduser()
     target.parent.mkdir(parents=True, exist_ok=True)
