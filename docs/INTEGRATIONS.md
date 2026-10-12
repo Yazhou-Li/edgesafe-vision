@@ -113,3 +113,35 @@ This narrow contract is intentional. New Frigate topic families should be
 added with fixtures and regression tests before being treated as supported.
 
 Reference: https://docs.frigate.video/integrations/mqtt/
+
+
+## Generic webhook events
+
+HTTP servers can pass an already-decoded JSON object, a JSON string, or UTF-8
+JSON bytes to the dependency-free webhook adapter. The core package does not
+open a socket or depend on a web framework.
+
+```python
+from edgesafe.adapters import parse_webhook_event
+
+event = parse_webhook_event(
+    {
+        "eventId": "EV-WEB-1",
+        "cameraId": "CAM-WEB-1",
+        "type": "person",
+        "observedAt": 1700000020.0,
+        "confidence": 0.9,
+        "trackId": "track-web-1",
+        "attributes": {"source": "synthetic-webhook"},
+    }
+)
+```
+
+The supported payload fields match the normalized EdgeSafe event contract:
+`eventId`, `cameraId`, `type`, and `observedAt` are required;
+`confidence`, `trackId`, and `attributes` are optional. Malformed JSON,
+non-object JSON, invalid UTF-8, missing core fields, invalid event types, and
+invalid optional values raise `ValueError`.
+
+Applications remain responsible for HTTP routing, authentication, request-size
+limits, and transport security before passing a payload to this adapter.
