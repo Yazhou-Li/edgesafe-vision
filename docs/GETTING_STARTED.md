@@ -73,6 +73,28 @@ A check-plan file can contain:
 }
 ```
 
+Acceptance profiles add explicit `proves` and `doesNotProve` statements to
+the same bounded checks. Load and execute one through the existing Doctor path:
+
+```python
+from edgesafe.doctor import run_checks
+from edgesafe.profiles import load_acceptance_profile, profile_to_doctor_config
+
+profile_path = "examples/profiles/operator-feedback-prerequisites.json"
+profile = load_acceptance_profile(profile_path)
+config = profile_to_doctor_config(profile, profile_path=profile_path)
+results = run_checks(
+    http_urls=config.http_urls,
+    tcp_targets=config.tcp_targets,
+    file_paths=config.file_paths,
+)
+```
+
+Relative entries in `checks.files` resolve from the directory containing the
+profile, not from the caller's current working directory. HTTP URLs and TCP
+targets are used exactly as written and are probed only when `run_checks` is
+called.
+
 Evidence bundles include platform/Python metadata and PASS/WARN/FAIL checks,
 but intentionally do not collect the machine hostname. HTTP result labels also
 remove embedded URL credentials, query strings, and fragments before output.
