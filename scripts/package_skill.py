@@ -34,7 +34,10 @@ def collect_skill_files(skill_dir: Path) -> list[Path]:
         raise ValueError("skill directory must contain SKILL.md")
 
     files: list[Path] = []
-    for path in sorted(skill_dir.rglob("*")):
+    # Sort by archive names, not native Path order (case differs on Windows).
+    for path in sorted(
+        skill_dir.rglob("*"), key=lambda p: p.relative_to(skill_dir).as_posix()
+    ):
         if path.is_symlink():
             raise ValueError(f"symlinks are not allowed in skill archives: {path}")
         if not path.is_file():
