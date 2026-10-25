@@ -31,7 +31,7 @@ EdgeSafe Vision packages those "last-mile" engineering problems into reusable co
 ## Highlights
 
 - Multi-camera RTSP integration patterns
-- Frigate / OpenVINO edge inference integration
+- Frigate / MQTT event adapters and OpenVINO integration guidance (no bundled inference service)
 - Occupancy / overcrowding rules with persistence and cooldown
 - Restricted-zone intrusion rule design
 - Video / AI metadata freshness and temporal-skew checks
@@ -78,6 +78,8 @@ The repository contains working, customer-agnostic reference code:
 Chinese introduction: [README_CN.md](README_CN.md)
 
 ## Architecture
+
+The diagram below is an **integration reference**, not a fully implemented or certified deployment. This repository ships reusable event adapters, rule and alarm models, diagnostics, and synthetic demos. It does **not** bundle a production RTSP ingest service, Frigate/OpenVINO inference runtime, fire/smoke detector, web UI, voice playback, or snapshot service. Those components require separate integration and site-specific validation.
 
 ```text
 IP Cameras / RTSP
