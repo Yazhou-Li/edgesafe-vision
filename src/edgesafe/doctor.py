@@ -32,6 +32,7 @@ class DoctorConfig:
     http_urls: tuple[str, ...] = ()
     tcp_targets: tuple[tuple[str, int], ...] = ()
     file_paths: tuple[str, ...] = ()
+    dns_targets: tuple[str, ...] = ()
 
 
 def check_disk(path: str = ".") -> CheckResult:
@@ -58,6 +59,18 @@ def check_file(path: str) -> CheckResult:
         return CheckResult(name, "FAIL", f"{type(exc).__name__}: {exc}")
 
     return CheckResult(name, "PASS", f"readable, {size} bytes")
+
+
+def check_dns(host: str) -> CheckResult:
+    """Resolve a hostname without opening a TCP/HTTP connection."""
+    try:
+        addresses = socket.getaddrinfo(host, None)
+    except OSError as exc:
+        return CheckResult(f"dns:{host}", "FAIL", f"{type(exc).__name__}: {exc}")
+    unique = {item[4][0] for item in addresses if item[4]}
+    if not unique:
+        return CheckResult(f"dns:{host}", "FAIL", "no addresses resolved")
+    return CheckResult(f"dns:{host}", "PASS", f"{len(unique)} address(es) resolved")
 
 
 def check_tcp(host: str, port: int, timeout: float = 2.0) -> CheckResult:
@@ -124,8 +137,10 @@ def run_checks(
     http_urls: Iterable[str] = (),
     tcp_targets: Iterable[tuple[str, int]] = (),
     file_paths: Iterable[str] = (),
+    dns_targets: Iterable[str] = (),
 ) -> List[CheckResult]:
     results = baseline_results()
+    results.extend(check_dns(host) for host in dns_targets)
     results.extend(check_http(url) for url in http_urls)
     results.extend(check_tcp(host, port) for host, port in tcp_targets)
     results.extend(check_file(path) for path in file_paths)
@@ -169,7 +184,7 @@ def load_check_config(path: str) -> DoctorConfig:
     if not isinstance(data, dict):
         raise ValueError("config root must be a JSON object")
 
-    allowed = {"http", "tcp", "files"}
+    allowed = {"http", "tcp", "files", "dns"}
     unknown = sorted(set(data) - allowed)
     if unknown:
         raise ValueError(f"unknown config keys: {', '.join(unknown)}")
@@ -177,6 +192,7 @@ def load_check_config(path: str) -> DoctorConfig:
     http_urls = _string_list(data.get("http"), "http")
     raw_tcp = _string_list(data.get("tcp"), "tcp")
     file_paths = _string_list(data.get("files"), "files")
+    dns_targets = _string_list(data.get("dns"), "dns")
 
     tcp_targets: list[tuple[str, int]] = []
     for value in raw_tcp:
@@ -189,6 +205,7 @@ def load_check_config(path: str) -> DoctorConfig:
         http_urls=tuple(http_urls),
         tcp_targets=tuple(tcp_targets),
         file_paths=tuple(file_paths),
+        dns_targets=tuple(dns_targets),
     )
 
 
@@ -236,7 +253,14 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--config",
-        help="JSON check plan with http, tcp, and files arrays.",
+        help="JSON check plan with dns, http, tcp, and files arrays.",
+    )
+    parser.add_argument(
+        "--dns",
+        action="append",
+        default=[],
+        metavar="HOST",
+        help="Hostname to resolve; repeat for multiple targets.",
     )
     parser.add_argument(
         "--http",
@@ -284,11 +308,13 @@ def main(argv: Optional[List[str]] = None) -> int:
         except ValueError as exc:
             parser.error(str(exc))
 
+    dns_targets = _dedupe([*config.dns_targets, *args.dns])
     http_urls = _dedupe([*config.http_urls, *args.http])
     tcp_targets = _dedupe([*config.tcp_targets, *args.tcp])
     file_paths = _dedupe([*config.file_paths, *args.files])
 
     results = run_checks(
+        dns_targets=dns_targets,
         http_urls=http_urls,
         tcp_targets=tcp_targets,
         file_paths=file_paths,
