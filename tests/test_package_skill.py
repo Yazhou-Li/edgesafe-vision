@@ -38,6 +38,27 @@ class PackageSkillTests(unittest.TestCase):
                     ],
                 )
 
+    def test_archive_order_uses_case_sensitive_posix_names(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            skill = root / "demo-skill"
+            skill.mkdir()
+            for name in ("zeta.txt", "alpha.txt", "SKILL.md"):
+                (skill / name).write_text(name, encoding="utf-8")
+
+            output = root / "ordered.zip"
+            build_skill_archive(skill, output)
+
+            with zipfile.ZipFile(output) as archive:
+                self.assertEqual(
+                    archive.namelist(),
+                    [
+                        "demo-skill/SKILL.md",
+                        "demo-skill/alpha.txt",
+                        "demo-skill/zeta.txt",
+                    ],
+                )
+
     def test_requires_skill_manifest(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
