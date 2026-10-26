@@ -192,8 +192,34 @@ def load_check_config(path: str) -> DoctorConfig:
     )
 
 
-def build_evidence_bundle(results: Iterable[CheckResult]) -> dict:
+def _redact_results(results: Iterable[CheckResult]) -> list[CheckResult]:
+    """Replace environment identifiers with non-reversible local labels."""
+    redacted: list[CheckResult] = []
+    identifier = 0
+    for item in results:
+        if item.name in {"python", "disk"}:
+            redacted.append(item)
+            continue
+        identifier += 1
+        category = item.name.split(":", 1)[0]
+        redacted.append(
+            CheckResult(
+                name=f"{category}:[redacted-{identifier}]",
+                status=item.status,
+                detail="diagnostic detail redacted for sharing",
+            )
+        )
+    return redacted
+
+
+def build_evidence_bundle(
+    results: Iterable[CheckResult], *, shareable: bool = False
+) -> dict:
     """Build a shareable evidence object without collecting a hostname."""
+
+    items = list(results)
+    if shareable:
+        items = _redact_results(items)
 
     return {
         "schema": "edgesafe-evidence-v1",
@@ -204,14 +230,16 @@ def build_evidence_bundle(results: Iterable[CheckResult]) -> dict:
             "machine": platform.machine(),
         },
         "pythonVersion": platform.python_version(),
-        "checks": [asdict(item) for item in results],
+        "checks": [asdict(item) for item in items],
     }
 
 
-def write_evidence_bundle(path: str, results: Iterable[CheckResult]) -> Path:
+def write_evidence_bundle(
+    path: str, results: Iterable[CheckResult], *, shareable: bool = False
+) -> Path:
     target = Path(path).expanduser()
     target.parent.mkdir(parents=True, exist_ok=True)
-    payload = build_evidence_bundle(results)
+    payload = build_evidence_bundle(results, shareable=shareable)
     target.write_text(
         json.dumps(payload, indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8",
@@ -266,6 +294,11 @@ def build_parser() -> argparse.ArgumentParser:
         help="Write a structured JSON evidence bundle to PATH.",
     )
     parser.add_argument(
+        "--shareable",
+        action="store_true",
+        help="Redact environment-specific identifiers in all diagnostic outputs.",
+    )
+    parser.add_argument(
         "--json",
         action="store_true",
         help="Emit the legacy JSON check list instead of the table.",
@@ -293,20 +326,26 @@ def main(argv: Optional[List[str]] = None) -> int:
         tcp_targets=tcp_targets,
         file_paths=file_paths,
     )
+    output_results = _redact_results(results) if args.shareable else results
 
     if args.evidence:
         try:
-            evidence_path = write_evidence_bundle(args.evidence, results)
+            evidence_path = write_evidence_bundle(
+                args.evidence, output_results
+            )
         except OSError as exc:
             parser.error(f"cannot write evidence bundle: {exc}")
         if not args.json:
-            print(f"EVIDENCE  {evidence_path}")
+            if args.shareable:
+                print("EVIDENCE  [redacted path]")
+            else:
+                print(f"EVIDENCE  {evidence_path}")
 
     if args.json:
-        print(json.dumps([asdict(x) for x in results], indent=2))
+        print(json.dumps([asdict(x) for x in output_results], indent=2))
     else:
-        width = max(len(x.name) for x in results)
-        for item in results:
+        width = max(len(x.name) for x in output_results)
+        for item in output_results:
             print(
                 f"{item.status:4}  {item.name:<{width}}  {item.detail}"
             )
