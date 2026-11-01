@@ -74,11 +74,15 @@ A check-plan file can contain:
 ```
 
 Evidence bundles include platform/Python metadata and PASS/WARN/FAIL checks,
-but intentionally do not collect the machine hostname. HTTP result labels also
-remove embedded URL credentials, query strings, and fragments before output.
+but intentionally do not collect the machine hostname. HTTP result labels remove
+embedded URL credentials, query strings, and fragments. Invalid HTTP/HTTPS
+URLs receive a fixed `<invalid-url>` label, and HTTP probe failures report the
+exception class without copying raw exception messages that may contain secrets.
 
-Review evidence before sharing it externally: TCP targets, file paths, and
-service URLs may still reveal deployment details supplied by the operator.
+**Evidence is not automatically safe to publish.** TCP targets, file paths,
+HTTP path segments, OS metadata, and other operator-supplied values may still
+identify a deployment. Inspect and sanitize every evidence bundle before
+sharing it externally.
 
 EdgeSafe Doctor is read-only by design.
 
