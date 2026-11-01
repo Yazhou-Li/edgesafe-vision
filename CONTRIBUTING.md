@@ -75,6 +75,19 @@ Agent Skills must remain small, portable, and evidence-driven.
 - put detailed playbooks in `references/` and reusable templates in `assets/` instead of bloating the main skill;
 - use synthetic examples and make every external side effect explicit.
 
+## Reviewable contributions
+
+Documentation-only PRs must not introduce executable behavior. Do not add
+editor/workspace auto-run tasks, install hooks, obfuscated scripts, or
+executables disguised as fonts, images, or other assets. Avoid unrelated binary
+files; if a binary is necessary, explain its provenance, license, purpose, and
+how reviewers can verify it.
+
+Maintainers should inspect the complete changed-file list, including hidden
+configuration and CI changes, before executing code from unfamiliar forks or
+approving their workflows. A passing CI check does not replace source review.
+Public validation must not require customer infrastructure or production secrets.
+
 ## Pull requests
 
 Before opening a PR:
