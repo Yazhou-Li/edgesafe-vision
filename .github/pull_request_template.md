@@ -22,6 +22,7 @@ Commands and results (or reason not run):
 - [ ] No customer identities, personal information, screenshots, or alarm history.
 - [ ] Example data is synthetic or explicitly safe for public release.
 - [ ] No unexpected network access, system mutation, or access-control bypass.
+- [ ] No editor auto-run tasks, hidden install hooks, obfuscated scripts, or executable assets disguised as documentation; required binaries are justified and verifiable.
 
 ## Compatibility and limitations
 
