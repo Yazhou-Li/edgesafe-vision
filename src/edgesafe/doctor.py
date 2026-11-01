@@ -80,20 +80,25 @@ def _safe_url_label(url: str) -> str:
         host = parsed.hostname or ""
         if ":" in host and not host.startswith("["):
             host = f"[{host}]"
+        if parsed.scheme not in {"http", "https"} or not host:
+            return "<invalid-url>"
         if parsed.port is not None:
             host = f"{host}:{parsed.port}"
         return urlunsplit((parsed.scheme, host, parsed.path, "", ""))
     except ValueError:
-        return url.split("?", 1)[0].split("#", 1)[0]
+        # Never echo malformed input: it may contain credentials or tokens.
+        return "<invalid-url>"
 
 
 def check_http(url: str, timeout: float = 3.0) -> CheckResult:
     label = _safe_url_label(url)
-    req = urllib.request.Request(
-        url,
-        headers={"User-Agent": "EdgeSafe-Doctor/0.2"},
-    )
+    if label == "<invalid-url>":
+        return CheckResult(label, "FAIL", "invalid HTTP/HTTPS URL")
     try:
+        req = urllib.request.Request(
+            url,
+            headers={"User-Agent": "EdgeSafe-Doctor/0.2"},
+        )
         with urllib.request.urlopen(req, timeout=timeout) as response:
             code = getattr(response, "status", 200)
             status = "PASS" if 200 <= code < 500 else "WARN"
@@ -103,7 +108,8 @@ def check_http(url: str, timeout: float = 3.0) -> CheckResult:
         return CheckResult(label, status, f"HTTP {exc.code}")
     except Exception as exc:
         return CheckResult(
-            label, "FAIL", f"{type(exc).__name__}: {exc}"
+            # Exception messages can embed the original URL or credentials.
+            label, "FAIL", f"{type(exc).__name__} during HTTP probe"
         )
 
 
